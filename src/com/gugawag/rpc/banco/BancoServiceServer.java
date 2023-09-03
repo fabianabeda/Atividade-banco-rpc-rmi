@@ -13,30 +13,31 @@ public class BancoServiceServer extends UnicastRemoteObject implements BancoServ
     private List<Conta> contas;
 
     public BancoServiceServer() throws RemoteException {
-        saldoContas = new HashMap<>();
         contas = new ArrayList<>();
+        contas.add(new Conta("1", 115.0));
+        contas.add(new Conta("2", 130.0));
+        contas.add(new Conta("3", 160.0));
 
-        // Defina as contas iniciais aqui
-        adicionarConta("1", 100.0);
-        adicionarConta("2", 156.0);
-        adicionarConta("3", 950.0);
+        saldoContas = new HashMap<>();
+        saldoContas.put("1", 100.0);
+        saldoContas.put("2", 156.0);
+        saldoContas.put("3", 950.0);
     }
 
     @Override
     public double saldo(String conta) throws RemoteException {
-        return saldoContas.getOrDefault(conta, 0.0);
+        return saldoContas.get(conta);
     }
 
     @Override
     public int quantidadeContas() throws RemoteException {
-        return contas.size();
+        return saldoContas.size();
     }
 
     @Override
     public void adicionarConta(String conta, double saldo) throws RemoteException {
-        // Adicione a nova conta à lista de contas e ao mapa de saldoContas
         contas.add(new Conta(conta, saldo));
-        saldoContas.put(conta, saldo);
-        System.out.println("Conta cadastrada: " + conta);
     }
+
+
 }
